@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <!-- Copied from color picker -->
+    <color name="disabled_gray">#44888888</color>
+    <color name="gray600">#757575</color>
 </resources>

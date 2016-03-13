@@ -3,4 +3,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <!-- Copied from the color picker -->
+    <dimen name="margin">16dp</dimen>
+    <dimen name="sliderWidth">36dp</dimen> <!--Matches checker pattern-->
+    <dimen name="hexFieldWidth">88dp</dimen> <!-- 2 * slider width + margin. Explicit for when alpha is hidden in landscape -->
+    <dimen name="preference_thumbnail_size">48dp</dimen>
 </resources>

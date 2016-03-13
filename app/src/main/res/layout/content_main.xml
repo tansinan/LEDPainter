@@ -13,5 +13,14 @@
     tools:showIn="@layout/activity_main">
     <com.ledpainter.ledpainter.PaintingView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/view" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:text="A button"
+        android:layout_alignBottom="@+id/view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="73dp" />
 </RelativeLayout>
