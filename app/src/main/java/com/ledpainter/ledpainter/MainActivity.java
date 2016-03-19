@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +17,9 @@ import com.rarepebble.colorpicker.ColorPickerView;
 
 public class MainActivity extends AppCompatActivity {
 
-    protected Button pushButton;
+    protected Button buttonSetColor;
+    protected Button buttonErase;
+
     protected PaintingView paintingView;
     protected ColorPickerView colorPickerView;
     protected AlertDialog colorPickerDialog;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         PaintingView paintingView = MainActivity.this.paintingView;
                         ColorPickerView colorPickerView = MainActivity.this.colorPickerView;
                         paintingView.setBrushColor(colorPickerView.getColor());
+                        paintingView.setEraseModeEnabled(false);
                     }
                 })
                 .setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -66,11 +68,18 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        pushButton = (Button)findViewById(R.id.button);
-        pushButton.setOnClickListener(new View.OnClickListener() {
+        buttonSetColor = (Button)findViewById(R.id.button_set_color);
+        buttonSetColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.this.onClick(v);
+                MainActivity.this.onButtonSetColorClick();
+            }
+        });
+        buttonErase = (Button)findViewById(R.id.button_erase);
+        buttonErase.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                MainActivity.this.onButtonEraseClick();
             }
         });
         paintingView = (PaintingView)findViewById(R.id.view);
@@ -100,9 +109,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void onClick(View arg0) {
 
-        // show it
+    public void onButtonSetColorClick() {
         colorPickerDialog.show();
+    }
+    public void onButtonEraseClick() {
+        paintingView.setEraseModeEnabled(true);
     }
 }

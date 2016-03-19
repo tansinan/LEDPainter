@@ -24,22 +24,25 @@ public class PaintingView extends View implements View.OnTouchListener{
     protected float touchX = -1.0f;
     protected float touchY = -1.0f;
 
-    protected int brushColor;
+    protected int brushColor = Color.BLACK;
+    protected boolean inEraseMode = false;
 
     public void setBrushColor(int brushColor)
     {
         this.brushColor = brushColor;
     }
+    public void setEraseModeEnabled(boolean eraseModeEnabled)
+    {
+        inEraseMode = eraseModeEnabled;
+    }
 
     public PaintingView(Context context) {
         super(context);
         setOnTouchListener(this);
-        setBrushColor(Color.BLACK);
     }
     public PaintingView(Context context,AttributeSet attributeSet) {
         super(context, attributeSet);
         setOnTouchListener(this);
-        setBrushColor(Color.BLACK);
     }
 
     @Override
@@ -49,7 +52,10 @@ public class PaintingView extends View implements View.OnTouchListener{
         Paint p = new Paint();
         p.setStrokeCap(Paint.Cap.ROUND);
         p.setStrokeJoin(Paint.Join.ROUND);
-        p.setColor(brushColor);
+        if(inEraseMode)
+            p.setColor(Color.WHITE);
+        else
+            p.setColor(brushColor);
         p.setStrokeWidth(10.0f);
         //canvas.drawRect(width * 0.25f, height * 0.25f, width * 0.75f, height * 0.75f, p);
         if(lastTouchX >= 0 && lastTouchY >= 0 &&
@@ -69,6 +75,13 @@ public class PaintingView extends View implements View.OnTouchListener{
         height = h;
         int bufferWidth = Math.min(w, h);
         buffer = Bitmap.createBitmap(bufferWidth, bufferWidth, Bitmap.Config.ARGB_8888);
+        for(int i=0;i<buffer.getWidth();i++)
+        {
+            for(int j=0;j<buffer.getHeight();j++)
+            {
+                buffer.setPixel(i, j, Color.WHITE);
+            }
+        }
     }
     @Override
     public boolean onTouch(View v, MotionEvent event) {

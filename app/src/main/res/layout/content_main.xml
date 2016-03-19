@@ -15,12 +15,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/view" />
-    <Button
+
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:text="A button"
         android:layout_alignBottom="@+id/view"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="73dp" />
+        android:layout_marginBottom="63dp">
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_toggle_1"
+            android:textOn="AA"
+            android:textOff="AA"/>
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_toggle_2"
+            android:textOn="BB"
+            android:textOff="BB"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_set_color"
+            android:text="Set Color"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="top" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_erase"
+            android:text="Erase"
+            android:layout_alignBottom="@+id/view"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="top" />
+    </LinearLayout>
 </RelativeLayout>
