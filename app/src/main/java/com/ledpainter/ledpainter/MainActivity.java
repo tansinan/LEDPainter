@@ -12,13 +12,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ToggleButton;
 
 import com.rarepebble.colorpicker.ColorPickerView;
 
 public class MainActivity extends AppCompatActivity {
 
+    protected ToggleButton buttonToggleBrush;
+    protected ToggleButton buttonToggleErase;
     protected Button buttonSetColor;
-    protected Button buttonErase;
 
     protected PaintingView paintingView;
     protected ColorPickerView colorPickerView;
@@ -43,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
                         paintingView.setEraseModeEnabled(false);
                     }
                 })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
                 });
@@ -68,20 +70,32 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        buttonToggleBrush = (ToggleButton)findViewById(R.id.button_toggle_brush);
+        buttonToggleBrush.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.this.paintingView.setEraseModeEnabled(false);
+                MainActivity.this.buttonToggleBrush.setChecked(true);
+                MainActivity.this.buttonToggleErase.setChecked(false);
+            }
+        });
+        buttonToggleErase = (ToggleButton)findViewById(R.id.button_toggle_eraser);
+        buttonToggleErase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.this.paintingView.setEraseModeEnabled(true);
+                MainActivity.this.buttonToggleBrush.setChecked(false);
+                MainActivity.this.buttonToggleErase.setChecked(true);
+            }
+        });
         buttonSetColor = (Button)findViewById(R.id.button_set_color);
-        buttonSetColor.setOnClickListener(new View.OnClickListener() {
+        buttonSetColor.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 MainActivity.this.onButtonSetColorClick();
             }
         });
-        buttonErase = (Button)findViewById(R.id.button_erase);
-        buttonErase.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                MainActivity.this.onButtonEraseClick();
-            }
-        });
+
         paintingView = (PaintingView)findViewById(R.id.view);
         colorPickerView = new ColorPickerView(this);
         colorPickerView.setColor(Color.BLACK);
@@ -112,8 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onButtonSetColorClick() {
         colorPickerDialog.show();
-    }
-    public void onButtonEraseClick() {
-        paintingView.setEraseModeEnabled(true);
+        buttonSetColor.setTextColor(paintingView.brushColor);
+        buttonSetColor.invalidate();
     }
 }
