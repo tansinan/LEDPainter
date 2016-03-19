@@ -3,6 +3,7 @@ package com.ledpainter.ledpainter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -23,13 +24,22 @@ public class PaintingView extends View implements View.OnTouchListener{
     protected float touchX = -1.0f;
     protected float touchY = -1.0f;
 
+    protected int brushColor;
+
+    public void setBrushColor(int brushColor)
+    {
+        this.brushColor = brushColor;
+    }
+
     public PaintingView(Context context) {
         super(context);
         setOnTouchListener(this);
+        setBrushColor(Color.BLACK);
     }
     public PaintingView(Context context,AttributeSet attributeSet) {
         super(context, attributeSet);
         setOnTouchListener(this);
+        setBrushColor(Color.BLACK);
     }
 
     @Override
@@ -39,7 +49,7 @@ public class PaintingView extends View implements View.OnTouchListener{
         Paint p = new Paint();
         p.setStrokeCap(Paint.Cap.ROUND);
         p.setStrokeJoin(Paint.Join.ROUND);
-        p.setARGB(255, 0, 0, 0);
+        p.setColor(brushColor);
         p.setStrokeWidth(10.0f);
         //canvas.drawRect(width * 0.25f, height * 0.25f, width * 0.75f, height * 0.75f, p);
         if(lastTouchX >= 0 && lastTouchY >= 0 &&
@@ -70,7 +80,6 @@ public class PaintingView extends View implements View.OnTouchListener{
         event.getPointerId(0);
         float x = event.getX();
         float y = event.getY();
-        Log.d("???", "x:" + x + "y:" + y);
         lastTouchX = touchX;
         lastTouchY = touchY;
         touchX = x;

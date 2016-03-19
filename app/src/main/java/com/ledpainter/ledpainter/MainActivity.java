@@ -2,11 +2,13 @@ package com.ledpainter.ledpainter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,38 @@ import com.rarepebble.colorpicker.ColorPickerView;
 public class MainActivity extends AppCompatActivity {
 
     protected Button pushButton;
+    protected PaintingView paintingView;
+    protected ColorPickerView colorPickerView;
+    protected AlertDialog colorPickerDialog;
+
+    protected void setupColorPickerDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set title
+        alertDialogBuilder.setTitle("Your Title");
+
+        // set dialog message
+        alertDialogBuilder
+                .setView(colorPickerView)
+                .setMessage("Click yes to exit!")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        PaintingView paintingView = MainActivity.this.paintingView;
+                        ColorPickerView colorPickerView = MainActivity.this.colorPickerView;
+                        paintingView.setBrushColor(colorPickerView.getColor());
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        colorPickerDialog = alertDialogBuilder.create();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.onClick(v);
             }
         });
+        paintingView = (PaintingView)findViewById(R.id.view);
+        colorPickerView = new ColorPickerView(this);
+        colorPickerView.setColor(Color.BLACK);
+        setupColorPickerDialog();
     }
 
     @Override
@@ -64,35 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onClick(View arg0) {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        // set title
-        alertDialogBuilder.setTitle("Your Title");
-
-        // set dialog message
-        alertDialogBuilder
-                .setView(new ColorPickerView(this))
-                .setMessage("Click yes to exit!")
-                .setCancelable(false)
-                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, close
-                        // current activity
-                        MainActivity.this.finish();
-                    }
-                })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
-                });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
         // show it
-        alertDialog.show();
+        colorPickerDialog.show();
     }
 }
