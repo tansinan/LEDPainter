@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,8 +15,10 @@ import android.view.View;
 public class PaintingView extends View implements View.OnTouchListener{
 
     Bitmap buffer;
+    Bitmap pixelatedBuffer;
     protected int width = 0;
     protected int height = 0;
+    protected int bufferWidth = 0;
 
     protected float lastTouchX = -1.0f;
     protected float lastTouchY = -1.0f;
@@ -26,6 +27,20 @@ public class PaintingView extends View implements View.OnTouchListener{
 
     protected int brushColor = Color.BLACK;
     protected boolean inEraseMode = false;
+    protected boolean pixelModeEnabled = false;
+    protected int gridWidth = 20;
+    protected int gridHeight = 20;
+
+    public boolean isPixelModeEnabled() {
+        return pixelModeEnabled;
+    }
+
+    public void setPixelModeEnabled(boolean pixelModeEnabled) {
+        this.pixelModeEnabled = pixelModeEnabled;
+        invalidate();
+    }
+
+    protected int pixelWidth = 10;
 
     public void setBrushColor(int brushColor)
     {
@@ -45,6 +60,39 @@ public class PaintingView extends View implements View.OnTouchListener{
         setOnTouchListener(this);
     }
 
+    protected void drawPixelModes(Canvas canvas) {
+        float averageWidth = bufferWidth / gridWidth;
+        float averageHeight = bufferWidth / gridHeight;
+
+        for(int i = 0; i < gridWidth; i++) {
+            for(int j = 0; j < gridHeight; j++) {
+                int beginX = (int)(averageWidth * i);
+                int beginY = (int)(averageHeight * j);
+                int endX = (int)(averageWidth * (i + 1));
+                int endY = (int)(averageHeight * (j + 1));
+                int pixelCount = (endX - beginX) * (endY - beginY);
+                int newRed = 0, newGreen = 0, newBlue = 0;
+                for(int k = beginX; k < endX; k++) {
+                    for (int l = beginY; l < endY; l++) {
+                        int color = buffer.getPixel(k, l);
+                        newRed += Color.red(color);
+                        newGreen += Color.green(color);
+                        newBlue += Color.blue(color);
+                    }
+                }
+                newRed /= pixelCount;
+                newGreen /= pixelCount;
+                newBlue /= pixelCount;
+                int newColor = Color.rgb(newRed, newGreen, newBlue);
+                for(int k = beginX; k < endX; k++) {
+                    for (int l = beginY; l < endY; l++) {
+                        pixelatedBuffer.setPixel(k, l, newColor);
+                    }
+                }
+            }
+        }
+        canvas.drawBitmap(pixelatedBuffer, 0, 0, new Paint());
+    }
     @Override
     protected void onDraw (Canvas canvas) {
         if(buffer == null) return;
@@ -65,7 +113,10 @@ public class PaintingView extends View implements View.OnTouchListener{
             bufferCanvas.drawLine(lastTouchX, lastTouchY, touchX, touchY, p);
             canvas.drawText("Hello, world", 100.0f, 100.0f, p);
         }
-        canvas.drawBitmap(buffer, 0, 0, p);
+        if(isPixelModeEnabled())
+            drawPixelModes(canvas);
+        else
+            canvas.drawBitmap(buffer, 0, 0, p);
     }
 
     @Override
@@ -73,8 +124,9 @@ public class PaintingView extends View implements View.OnTouchListener{
     {
         width = w;
         height = h;
-        int bufferWidth = Math.min(w, h);
+        bufferWidth = Math.min(w, h);
         buffer = Bitmap.createBitmap(bufferWidth, bufferWidth, Bitmap.Config.ARGB_8888);
+        pixelatedBuffer = Bitmap.createBitmap(bufferWidth, bufferWidth, Bitmap.Config.ARGB_8888);
         for(int i=0;i<buffer.getWidth();i++)
         {
             for(int j=0;j<buffer.getHeight();j++)

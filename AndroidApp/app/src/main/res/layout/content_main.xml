@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/view"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="63dp">
+        android:layout_marginBottom="103dp">
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,5 +44,20 @@
             android:text="Set Color"
             android:layout_centerHorizontal="true"
             android:layout_gravity="top" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="63dp">
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_toggle_preview"
+            android:textOn="Preview"
+            android:checked="false"
+            android:textOff="Edit"/>
     </LinearLayout>
 </RelativeLayout>

@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected ToggleButton buttonToggleBrush;
     protected ToggleButton buttonToggleErase;
     protected Button buttonSetColor;
+    protected ToggleButton buttonTogglePreview;
 
     protected PaintingView paintingView;
     protected ColorPickerView colorPickerView;
@@ -93,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MainActivity.this.onButtonSetColorClick();
+            }
+        });
+        buttonTogglePreview = (ToggleButton)findViewById(R.id.button_toggle_preview);
+        buttonTogglePreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                paintingView.setPixelModeEnabled(buttonTogglePreview.isChecked());
             }
         });
 
