@@ -1,0 +1,3 @@
+[submodule "AndroidApp/app/libs/AndroidSmoothBluetooth"]
+	path = AndroidApp/app/libs/AndroidSmoothBluetooth
+	url = git@github.com:tansinan/AndroidSmoothBluetooth.git
