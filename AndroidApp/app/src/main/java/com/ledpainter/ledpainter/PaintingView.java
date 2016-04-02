@@ -25,7 +25,7 @@ public class PaintingView extends View implements View.OnTouchListener{
     protected float touchX = -1.0f;
     protected float touchY = -1.0f;
 
-    protected int brushColor = Color.BLACK;
+    protected int brushColor = Color.WHITE;
     protected boolean inEraseMode = false;
     protected boolean pixelModeEnabled = false;
     protected int gridWidth = 5;
@@ -103,10 +103,10 @@ public class PaintingView extends View implements View.OnTouchListener{
         p.setStrokeCap(Paint.Cap.ROUND);
         p.setStrokeJoin(Paint.Join.ROUND);
         if(inEraseMode)
-            p.setColor(Color.WHITE);
+            p.setColor(Color.BLACK);
         else
             p.setColor(brushColor);
-        p.setStrokeWidth(10.0f);
+        p.setStrokeWidth(30.0f);
         //canvas.drawRect(width * 0.25f, height * 0.25f, width * 0.75f, height * 0.75f, p);
         if(lastTouchX >= 0 && lastTouchY >= 0 &&
                 touchX >= 0 && touchY >= 0 &&
@@ -133,7 +133,7 @@ public class PaintingView extends View implements View.OnTouchListener{
         {
             for(int j=0;j<buffer.getHeight();j++)
             {
-                buffer.setPixel(i, j, Color.WHITE);
+                buffer.setPixel(i, j, Color.BLACK);
             }
         }
     }
