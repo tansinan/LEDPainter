@@ -44,6 +44,14 @@
             android:text="Set Color"
             android:layout_centerHorizontal="true"
             android:layout_gravity="top" />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_toggle_preview"
+            android:textOn="Preview"
+            android:checked="false"
+            android:textOff="Edit"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -52,12 +60,19 @@
         android:layout_alignBottom="@+id/view"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="63dp">
-        <ToggleButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_toggle_preview"
-            android:textOn="Preview"
-            android:checked="false"
-            android:textOff="Edit"/>
+            android:id="@+id/button_connect"
+            android:text="Connect"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="top" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_push_image"
+            android:text="Push"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="top" />
     </LinearLayout>
 </RelativeLayout>
