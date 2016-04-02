@@ -241,9 +241,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void onButtonPushImage() {
         if(bluetoothManager.isConnected()) {
-            for(int i = 0; i < 3; i++) {
-                int val = (int)(Math.random() * 255);
-                bluetoothManager.send(Integer.toString(val) + " ");
+            for(int i = 0; i < paintingView.gridWidth; i++)
+            {
+                for(int j = 0; j < paintingView.gridHeight; j++)
+                {
+                    int color = paintingView.gridData[i][j];
+                    bluetoothManager.send(Integer.toString(Color.red(color)) + " ");
+                    bluetoothManager.send(Integer.toString(Color.green(color)) + " ");
+                    bluetoothManager.send(Integer.toString(Color.blue(color)) + " ");
+                }
             }
         }
     }

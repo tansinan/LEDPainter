@@ -28,8 +28,9 @@ public class PaintingView extends View implements View.OnTouchListener{
     protected int brushColor = Color.BLACK;
     protected boolean inEraseMode = false;
     protected boolean pixelModeEnabled = false;
-    protected int gridWidth = 20;
-    protected int gridHeight = 20;
+    protected int gridWidth = 5;
+    protected int gridHeight = 5;
+    protected int gridData[][];
 
     public boolean isPixelModeEnabled() {
         return pixelModeEnabled;
@@ -39,8 +40,6 @@ public class PaintingView extends View implements View.OnTouchListener{
         this.pixelModeEnabled = pixelModeEnabled;
         invalidate();
     }
-
-    protected int pixelWidth = 10;
 
     public void setBrushColor(int brushColor)
     {
@@ -54,10 +53,12 @@ public class PaintingView extends View implements View.OnTouchListener{
     public PaintingView(Context context) {
         super(context);
         setOnTouchListener(this);
+        gridData = new int[gridWidth][gridHeight];
     }
     public PaintingView(Context context,AttributeSet attributeSet) {
         super(context, attributeSet);
         setOnTouchListener(this);
+        gridData = new int[gridWidth][gridHeight];
     }
 
     protected void drawPixelModes(Canvas canvas) {
@@ -84,6 +85,7 @@ public class PaintingView extends View implements View.OnTouchListener{
                 newGreen /= pixelCount;
                 newBlue /= pixelCount;
                 int newColor = Color.rgb(newRed, newGreen, newBlue);
+                gridData[i][j] = newColor;
                 for(int k = beginX; k < endX; k++) {
                     for (int l = beginY; l < endY; l++) {
                         pixelatedBuffer.setPixel(k, l, newColor);
